@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { StatusBar, KeyboardAvoidingView } from "react-native";
 import styled from "styled-components/native";
+import { createAccount } from "../../api";
 import Btn from "../../components/Auth/Btn";
 import DismissKeyboard from "../../components/DismissKeyboard";
+import { isEmail } from "../../utils";
 import Input from "./Input";
 
 const Container = styled.View`
@@ -15,12 +17,52 @@ const InputContainer = styled.View`
   margin-bottom: 30px;
 `;
 
-export default () => {
+export default ({ navigation: { navigate } }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = () => alert(`${username}${password}`);
+  const [loading, setLoading] = useState("");
+  const isFormValid = () => {
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      email === "" ||
+      password === ""
+    ) {
+      alert("All fields are required.");
+      return false;
+    }
+    if (!isEmail(email)) {
+      alert("Please add a valid email.");
+      return false;
+    }
+    return true;
+  };
+  const handleSubmit = async () => {
+    if (!isFormValid()) {
+      return;
+    }
+    setLoading(true);
+    try {
+      const { status } = await createAccount({
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        username: email,
+        password,
+      });
+      if (status === 201) {
+        alert("Account created. Sign in, please.");
+        navigate("SignIn", { email, password });
+      }
+    } catch (e) {
+      alert(e);
+      console.warn(e);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <DismissKeyboard>
       <Container>
@@ -30,20 +72,21 @@ export default () => {
             <Input
               value={firstName}
               placeholder="First Name"
-              autoCapitalize="none"
+              autoCapitalize="words"
               stateFn={setFirstName}
             />
             <Input
               value={lastName}
               placeholder="Last Name"
-              autoCapitalize="none"
+              autoCapitalize="words"
               stateFn={setLastName}
             />
             <Input
-              value={username}
+              keyboardType={"email-address"}
+              value={email}
               placeholder="Username"
               autoCapitalize="none"
-              stateFn={setUsername}
+              stateFn={setEmail}
             />
             <Input
               value={password}
@@ -52,7 +95,12 @@ export default () => {
               stateFn={setPassword}
             />
           </InputContainer>
-          <Btn text={"Sign Up"} accent onPress={handleSubmit}></Btn>
+          <Btn
+            loading={loading}
+            text={"Sign Up"}
+            accent
+            onPress={handleSubmit}
+          ></Btn>
         </KeyboardAvoidingView>
       </Container>
     </DismissKeyboard>

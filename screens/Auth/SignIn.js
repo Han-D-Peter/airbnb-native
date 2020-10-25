@@ -15,9 +15,9 @@ const InputContainer = styled.View`
   margin-bottom: 30px;
 `;
 
-export default () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+export default ({ props: { params } }) => {
+  const [username, setUsername] = useState(params?.email);
+  const [password, setPassword] = useState(params?.password);
   const handleSubmit = () => alert(username);
   return (
     <DismissKeyboard>
@@ -25,7 +25,7 @@ export default () => {
         <StatusBar barStyle="dark-content" />
         <InputContainer>
           <Input
-            value={username}
+            value={email}
             placeholder="Username"
             autoCapitalize="none"
             stateFn={setUsername}
