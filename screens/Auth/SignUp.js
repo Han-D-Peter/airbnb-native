@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { StatusBar, KeyboardAvoidingView } from "react-native";
 import styled from "styled-components/native";
-import { createAccount } from "../../api";
 import Btn from "../../components/Auth/Btn";
+import Input from "../../components/Auth/Input";
 import DismissKeyboard from "../../components/DismissKeyboard";
 import { isEmail } from "../../utils";
-import Input from "./Input";
+import api from "../../api";
 
 const Container = styled.View`
   flex: 1;
@@ -22,7 +22,7 @@ export default ({ navigation: { navigate } }) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState(false);
   const isFormValid = () => {
     if (
       firstName === "" ||
@@ -45,20 +45,19 @@ export default ({ navigation: { navigate } }) => {
     }
     setLoading(true);
     try {
-      const { status } = await createAccount({
+      const { status } = await api.createAccount({
         first_name: firstName,
         last_name: lastName,
         email,
         username: email,
-        password,
+        password
       });
       if (status === 201) {
         alert("Account created. Sign in, please.");
         navigate("SignIn", { email, password });
       }
     } catch (e) {
-      alert(e);
-      console.warn(e);
+      alert("The email is taken");
     } finally {
       setLoading(false);
     }
@@ -84,7 +83,8 @@ export default ({ navigation: { navigate } }) => {
             <Input
               keyboardType={"email-address"}
               value={email}
-              placeholder="Username"
+              placeholder="Email"
+              ke
               autoCapitalize="none"
               stateFn={setEmail}
             />

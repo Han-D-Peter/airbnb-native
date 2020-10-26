@@ -33,13 +33,13 @@ export default ({ navigation }) => {
   return (
     <Container>
       <BlurView
-        intensity={40}
+        intensity={50}
         tint="light"
         style={{
           flex: 1,
           width: "100%",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
       >
         <Logo source={{ uri: LOGO_URL }} />

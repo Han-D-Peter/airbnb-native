@@ -21,7 +21,7 @@ const Input = ({
   isPassword = false,
   autoCapitalize,
   stateFn,
-  keyboardType,
+  keyboardType
 }) => (
   <Container
     keyboardType={keyboardType}
@@ -29,7 +29,7 @@ const Input = ({
     placeholder={placeholder}
     secureTextEntry={isPassword ? true : false}
     autoCapitalize={autoCapitalize}
-    onChangeText={(text) => stateFn(text)}
+    onChangeText={text => stateFn(text)}
   />
 );
 
@@ -38,7 +38,7 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   isPassword: PropTypes.bool,
   autoCapitalize: PropTypes.string,
-  stateFn: PropTypes.func.isRequired,
+  stateFn: PropTypes.func.isRequired
 };
 
 export default Input;
