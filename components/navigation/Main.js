@@ -15,12 +15,12 @@ export default () => (
     tabBarOptions={{
       activeTintColor: colors.red,
       tabStyle: {
-        paddingTop: 10,
+        paddingTop: 10
       },
       labelStyle: {
         textTransform: "uppercase",
-        fontWeight: "600",
-      },
+        fontWeight: "600"
+      }
     }}
     screenOptions={({ route }) => ({
       tabBarIcon: ({ focused }) => {
@@ -42,7 +42,7 @@ export default () => (
             color={focused ? colors.red : "grey"}
           />
         );
-      },
+      }
     })}
   >
     <Main.Screen name="Explore" component={Explore}></Main.Screen>

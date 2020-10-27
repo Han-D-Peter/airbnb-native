@@ -40,7 +40,7 @@ export default ({ route: { params } }) => {
     dispatch(
       userLogin({
         username: email,
-        password,
+        password
       })
     );
   };
