@@ -1,10 +1,14 @@
 import React from "react";
 import Pt from "prop-types";
 import styled from "styled-components/native";
+import { Dimensions } from "react-native";
+import Swiper from "react-native-swiper";
+
+const { width, height } = Dimensions.get("screen");
 
 const Container = styled.View`
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
   align-items: flex-start;
 `;
 
@@ -40,8 +44,34 @@ const PriceNumber = styled.Text`
   font-size: 16px;
 `;
 
+const PhotosContainer = styled.View`
+  margin-bottom: 10px;
+  overflow: hidden;
+  width: 100%;
+  height: ${height / 4}px;
+`;
+
+const SlideImage = styled.Image`
+  width: 100%;
+  height: 100%;
+`;
+
 const RoomCard = ({ id, isFav, isSuperHost, photos, name, price }) => (
   <Container>
+    <PhotosContainer>
+      {photos !== null || photos.length === 0 ? (
+        <SlideImage
+          resizeMode="repeat"
+          source={require("../assets/roomDefault.jpeg")}
+        />
+      ) : (
+        <Swiper>
+          {photos.map((photo) => (
+            <SlideImage key={photo.id} source={{ uri: photo.file }} />
+          ))}
+        </Swiper>
+      )}
+    </PhotosContainer>
     {isSuperHost ? (
       <Superhost>
         <SuperhostText>Superhost</SuperhostText>
@@ -61,11 +91,11 @@ RoomCard.propTypes = {
   isSuperHost: Pt.bool.isRequired,
   photos: Pt.arrayOf(
     Pt.shape({
-      file: Pt.string
+      file: Pt.string,
     })
   ),
   name: Pt.string.isRequired,
-  price: Pt.number.isRequired
+  price: Pt.number.isRequired,
 };
 
 export default RoomCard;
