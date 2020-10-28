@@ -9,8 +9,6 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const Text = styled.Text``;
-
 export default ({ rooms }) => {
   return (
     <Container>
@@ -21,19 +19,17 @@ export default ({ rooms }) => {
           style={{ width: "100%", marginTop: 120 }}
           contentContainerStyle={{ paddingHorizontal: 15 }}
         >
-          {rooms.map(room => {
-            if (room.user) {
-              <RoomCard
-                key={room.id}
-                name={room.name}
-                price={room.price}
-                photos={room.photos}
-                id={room.id}
-                isFav={room.is_fav}
-                isSuperHost={room.user.superhost}
-              />;
-            }
-          })}
+          {rooms.map((room) => (
+            <RoomCard
+              key={room.id}
+              name={room.name}
+              price={room.price}
+              photos={room.photos}
+              id={room.id}
+              isFav={room.is_fav}
+              isSuperHost={room.user.superhost}
+            />
+          ))}
         </ScrollView>
       )}
     </Container>
