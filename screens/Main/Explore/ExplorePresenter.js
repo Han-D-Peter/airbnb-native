@@ -10,7 +10,6 @@ const Container = styled.View`
 `;
 
 export default ({ rooms }) => {
-  console.log(rooms);
   return (
     <Container>
       {rooms.length === 0 ? (
