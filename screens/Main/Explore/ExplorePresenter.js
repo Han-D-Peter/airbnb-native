@@ -10,6 +10,7 @@ const Container = styled.View`
 `;
 
 export default ({ rooms }) => {
+  console.log(rooms);
   return (
     <Container>
       {rooms.length === 0 ? (
@@ -20,7 +21,7 @@ export default ({ rooms }) => {
           style={{ width: "100%", marginTop: 120 }}
           contentContainerStyle={{ paddingHorizontal: 15 }}
         >
-          {rooms.map((room) => (
+          {rooms.map(room => (
             <RoomCard
               key={room.id}
               name={room.name}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import utils from "../../utils";
-import api from "../../api";
+import utils from "../../../utils";
+import api from "../../../api";
 import SignUpPresenter from "./SignUpPresenter";
 
 export default ({ navigation: { navigate } }) => {
@@ -36,7 +36,7 @@ export default ({ navigation: { navigate } }) => {
         last_name: lastName,
         email,
         username: email,
-        password,
+        password
       });
       if (status === 201) {
         alert("Account created. Sign in, please.");
