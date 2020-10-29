@@ -6,41 +6,44 @@ const roomsSlice = createSlice({
   initialState: {
     explore: {
       page: 1,
-      rooms: []
+      rooms: [],
     },
-    favs: []
+    favs: [],
   },
   reducers: {
     setExploreRooms(state, action) {
       const { explore } = state;
       const { payload } = action;
-      payload.rooms.forEach(payloadRoom => {
+      payload.rooms.forEach((payloadRoom) => {
         const exists = explore.rooms.find(
-          savedRoom => savedRoom.id === payloadRoom.id
+          (savedRoom) => savedRoom.id === payloadRoom.id
         );
         if (!exists) {
           explore.rooms.push(payloadRoom);
         }
       });
-      state.explore.page = payload.page;
-    }
-  }
+    },
+    increasePage(state, action) {
+      state.explore.page += 1;
+    },
+  },
 });
 
-const { setExploreRooms } = roomsSlice.actions;
+export const { setExploreRooms, increasePage } = roomsSlice.actions;
 
-export const getRooms = () => async dispatch => {
+export const getRooms = (page) => async (dispatch) => {
   try {
     const {
-      data: { results }
-    } = await api.rooms();
+      data: { results },
+    } = await api.rooms(page);
     dispatch(
       setExploreRooms({
         rooms: results,
-        page: 1
       })
     );
-  } catch (e) {}
+  } catch (e) {
+    console.warn(e);
+  }
 };
 
 export default roomsSlice.reducer;

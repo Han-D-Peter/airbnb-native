@@ -65,8 +65,12 @@ const RoomCard = ({ id, isFav, isSuperHost, photos, name, price }) => (
           source={require("../assets/roomDefault.jpeg")}
         />
       ) : (
-        <Swiper>
-          {photos.map(photo => (
+        <Swiper
+          paginationStyle={{ marginBottom: -15 }}
+          dotColor={"rgba(200, 200, 200, 0.8)"}
+          activeDotColor={"white"}
+        >
+          {photos.map((photo) => (
             <SlideImage key={photo.id} source={{ uri: photo.file }} />
           ))}
         </Swiper>
@@ -91,11 +95,11 @@ RoomCard.propTypes = {
   isSuperHost: Pt.bool.isRequired,
   photos: Pt.arrayOf(
     Pt.shape({
-      file: Pt.string
+      file: Pt.string,
     })
   ),
   name: Pt.string.isRequired,
-  price: Pt.number.isRequired
+  price: Pt.number.isRequired,
 };
 
 export default RoomCard;
