@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components/native";
 import DismissKeyboard from "../../../components/DismissKeyboard";
-import { useNavigation } from "@react-navigation/native";
-import { TextInput } from "react-native";
+import { ActivityIndicator } from "react-native";
+import colors from "../../../colors";
+import RoomCard from "../../../components/RoomCard";
 
 const Container = styled.View`
   padding: 0px;
@@ -55,10 +56,46 @@ const Filter = styled.TextInput`
   width: 80px;
 `;
 
-export default () => {
-  const navigation = useNavigation();
-  return (
-    <DismissKeyboard>
+const SearchBtn = styled.TouchableOpacity`
+  background-color: ${colors.red};
+  padding: 10px;
+  margin: 10px 30px;
+  border-radius: 10px;
+  align-items: center;
+`;
+
+const SearchText = styled.Text`
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+`;
+
+const ResultsText = styled.Text`
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+`;
+
+const Results = styled.ScrollView`
+  margin-top: 25px;
+`;
+
+export default ({
+  navigation,
+  beds,
+  setBeds,
+  bedrooms,
+  setBedrooms,
+  bathrooms,
+  setBathrooms,
+  maxPrice,
+  setMaxPrice,
+  searching,
+  triggerSearch,
+  results,
+}) => (
+  <DismissKeyboard>
+    <>
       <Container>
         <SearchContainer>
           <SearchBar autoFocus={true} placeholder="Search by city..." />
@@ -69,26 +106,73 @@ export default () => {
         <FiltersContainer
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 20 }}
+          contentContainerStyle={{
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+          }}
         >
           <FilterContainer>
             <FilterLabel>Beds</FilterLabel>
-            <Filter placeholder="0" keyboardType={"number-pad"} />
+            <Filter
+              onChangeText={(text) => setBeds(text)}
+              value={beds}
+              placeholder="0"
+              keyboardType={"number-pad"}
+            />
           </FilterContainer>
           <FilterContainer>
             <FilterLabel>Bedrooms</FilterLabel>
-            <Filter placeholder="0" keyboardType={"number-pad"} />
+            <Filter
+              onChangeText={(text) => setBedrooms(text)}
+              value={bedrooms}
+              placeholder="0"
+              keyboardType={"number-pad"}
+            />
           </FilterContainer>
           <FilterContainer>
             <FilterLabel>Bathrooms</FilterLabel>
-            <Filter placeholder="0" keyboardType={"number-pad"} />
+            <Filter
+              onChangeText={(text) => setBathrooms(text)}
+              value={bathrooms}
+              placeholder="0"
+              keyboardType={"number-pad"}
+            />
           </FilterContainer>
           <FilterContainer>
             <FilterLabel>Max. price</FilterLabel>
-            <Filter placeholder="$0" keyboardType={"number-pad"} />
+            <Filter
+              onChangeText={(text) => setMaxPrice(text)}
+              value={maxPrice}
+              placeholder="$0"
+              keyboardType={"number-pad"}
+            />
           </FilterContainer>
         </FiltersContainer>
       </Container>
-    </DismissKeyboard>
-  );
-};
+      <SearchBtn onPress={searching ? null : triggerSearch}>
+        {searching ? (
+          <ActivityIndicator color="white" />
+        ) : (
+          <SearchText>Search</SearchText>
+        )}
+      </SearchBtn>
+      {results ? (
+        <ResultsText>Showing {results.count} results</ResultsText>
+      ) : null}
+      <Results contentContainerStyle={{ paddingHorizontal: 15 }}>
+        {results?.results?.map((room) => (
+          <RoomCard
+            key={room.id}
+            name={room.name}
+            price={room.price}
+            photos={room.photos}
+            id={room.id}
+            isFav={room.is_fav}
+            isSuperHost={room.user.superhost}
+            roomObj={room}
+          />
+        ))}
+      </Results>
+    </>
+  </DismissKeyboard>
+);

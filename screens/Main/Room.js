@@ -72,7 +72,6 @@ function formatTime(time) {
 }
 
 export default ({ route: { params }, navigation }) => {
-  console.log(params);
   useEffect(() => {
     navigation.setOptions({ title: params.name });
   }, []);
@@ -115,12 +114,12 @@ export default ({ route: { params }, navigation }) => {
             camera={{
               center: {
                 latitude: parseFloat(params.lat),
-                longitude: parseFloat(params.lng)
+                longitude: parseFloat(params.lng),
               },
               altitude: 10 * 200,
               pitch: 25,
               zoom: 10,
-              heading: 0
+              heading: 0,
             }}
             zoomEnabled={true}
             scrollEnabled={true}
@@ -129,7 +128,7 @@ export default ({ route: { params }, navigation }) => {
             <Marker
               coordinate={{
                 latitude: parseFloat(params.lat),
-                longitude: parseFloat(params.lng)
+                longitude: parseFloat(params.lng),
               }}
             />
           </MapView>
