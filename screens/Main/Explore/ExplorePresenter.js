@@ -1,17 +1,19 @@
 import React from "react";
 import styled from "styled-components/native";
-import { ActivityIndicator, ScrollView } from "react-native";
-import RoomCard from "../../../components/RoomCard";
 import {
+  ActivityIndicator,
+  ScrollView,
   TouchableOpacity,
-  TouchableWithoutFeedback
-} from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/core";
+  TouchableWithoutFeedback,
+} from "react-native";
+import RoomCard from "../../../components/RoomCard";
+import { useNavigation } from "@react-navigation/native";
 
 const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+  padding-horizontal: 15px;
 `;
 
 const FakeBar = styled.View`
@@ -63,9 +65,9 @@ export default ({ rooms, increasePage }) => {
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={{ width: "100%" }}
-            contentContainerStyle={{ paddingHorizontal: 15 }}
+            contentContainerStyle={{ paddingTop: 30 }}
           >
-            {rooms.map(room => (
+            {rooms.map((room) => (
               <RoomCard
                 key={room.id}
                 name={room.name}
