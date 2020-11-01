@@ -9,7 +9,10 @@ import Profile from "../screens/Main/Profile";
 import colors from "../colors";
 import utils from "../utils";
 import Room from "../screens/Main/Room";
+import Search from "../screens/Main/Search";
 import BackBtn from "../components/Auth/BackBtn";
+import { BlurView } from "expo-blur";
+import { StyleSheet } from "react-native";
 
 const TabsNavigator = createBottomTabNavigator();
 
@@ -69,6 +72,24 @@ export default () => (
       component={Tabs}
       options={{ headerShown: false }}
     />
-    <MainNavigatior.Screen name="RoomDetail" component={Room} />
+    <MainNavigatior.Screen
+      name="RoomDetail"
+      component={Room}
+      options={{
+        headerTransparent: true,
+        headerBackground: () => (
+          <BlurView
+            intensity={50}
+            tint="light"
+            style={StyleSheet.absoluteFill}
+          />
+        )
+      }}
+    />
+    <MainNavigatior.Screen
+      name="Search"
+      options={{ headerShown: false }}
+      component={Search}
+    />
   </MainNavigatior.Navigator>
 );
