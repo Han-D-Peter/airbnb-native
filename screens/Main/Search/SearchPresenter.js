@@ -92,7 +92,7 @@ export default ({
   setMaxPrice,
   searching,
   triggerSearch,
-  results,
+  results
 }) => (
   <DismissKeyboard>
     <>
@@ -108,13 +108,13 @@ export default ({
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
             paddingVertical: 10,
-            paddingHorizontal: 20,
+            paddingHorizontal: 20
           }}
         >
           <FilterContainer>
             <FilterLabel>Beds</FilterLabel>
             <Filter
-              onChangeText={(text) => setBeds(text)}
+              onChangeText={text => setBeds(text)}
               value={beds}
               placeholder="0"
               keyboardType={"number-pad"}
@@ -123,7 +123,7 @@ export default ({
           <FilterContainer>
             <FilterLabel>Bedrooms</FilterLabel>
             <Filter
-              onChangeText={(text) => setBedrooms(text)}
+              onChangeText={text => setBedrooms(text)}
               value={bedrooms}
               placeholder="0"
               keyboardType={"number-pad"}
@@ -132,7 +132,7 @@ export default ({
           <FilterContainer>
             <FilterLabel>Bathrooms</FilterLabel>
             <Filter
-              onChangeText={(text) => setBathrooms(text)}
+              onChangeText={text => setBathrooms(text)}
               value={bathrooms}
               placeholder="0"
               keyboardType={"number-pad"}
@@ -141,7 +141,7 @@ export default ({
           <FilterContainer>
             <FilterLabel>Max. price</FilterLabel>
             <Filter
-              onChangeText={(text) => setMaxPrice(text)}
+              onChangeText={text => setMaxPrice(text)}
               value={maxPrice}
               placeholder="$0"
               keyboardType={"number-pad"}
@@ -160,7 +160,7 @@ export default ({
         <ResultsText>Showing {results.count} results</ResultsText>
       ) : null}
       <Results contentContainerStyle={{ paddingHorizontal: 15 }}>
-        {results?.results?.map((room) => (
+        {results?.results?.map(room => (
           <RoomCard
             key={room.id}
             name={room.name}
